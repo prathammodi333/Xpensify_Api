@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>You've Been Invited to Join a Group on Xpensify!</title>
+    <style type="text/css">
+      /* Reset styles */
+      body { margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, Helvetica, sans-serif; }
+      table { border-collapse: collapse; }
+      a { text-decoration: none; }
+
+      /* Bootstrap-inspired classes */
+      .container { max-width: 600px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin: 0 auto; }
+      .header { padding: 20px; text-align: center; background-color: #007bff; border-top-left-radius: 8px; border-top-right-radius: 8px; }
+      .header h1 { margin: 0; color: #ffffff; font-size: 24px; font-weight: bold; }
+      .content { padding: 30px; }
+      .text-center { text-align: center; }
+      .btn { display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; font-size: 16px; font-weight: bold; border-radius: 4px; }
+      .btn:hover { background-color: #0056b3; } /* Limited support in email clients */
+      .footer { padding: 20px; text-align: center; background-color: #f8f9fa; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+      .footer p { margin: 0; font-size: 14px; color: #666666; }
+      .footer a { color: #007bff; }
+      p { margin: 0 0 15px; font-size: 16px; color: #333333; }
+      strong { font-weight: bold; }
+
+      /* Responsive design */
+      @media only screen and (max-width: 600px) {
+        .container { width: 100% !important; }
+        .content { padding: 20px !important; }
+        .btn { width: 100%; box-sizing: border-box; }
+      }
+    </style>
+  </head>
+  <body>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" class="container" cellpadding="0" cellspacing="0">
+            <!-- Header -->
+            <tr>
+              <td class="header">
+                <h1>Xpensify</h1>
+              </td>
+            </tr>
+            <!-- Body -->
+            <tr>
+              <td class="content">
+                <p>Hi,</p>
+                <p>
+                  <strong><%= @sender.name %></strong> has invited you to join the group "<%= @group.name %>" on Xpensify.
+                </p>
+                <p class="text-center">
+                  <a href="<%= @invite_link %>" class="btn">Join the Group</a>
+                </p>
+                <p>
+                  If you already have an account, you can simply log in and join the group.
+                </p>
+                <p>Best,</p>
+                <p>The Xpensify Team</p>
+              </td>
+            </tr>
+            
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

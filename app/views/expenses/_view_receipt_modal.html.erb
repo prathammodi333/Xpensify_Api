@@ -1,0 +1,23 @@
+
+
+<div class="modal fade" id="viewReceiptModal<%= expense.id %>" tabindex="-1" aria-labelledby="viewReceiptModalLabel<%= expense.id %>" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewReceiptModalLabel<%= expense.id %>">Receipt for <%= expense.description %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <% if expense.image.attached? %>
+          <%= image_tag expense.image, class: "img-fluid" %> <!-- Display Image -->
+        <% else %>
+          <p>No receipt image available.</p> <!-- Optional fallback message -->
+        <% end %>
+        <% if expense.image.attached? %>
+      <div class="modal-footer">
+        <%= link_to "Download", rails_blob_path(expense.image, disposition: "attachment"), class: "btn btn-secondary" %>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

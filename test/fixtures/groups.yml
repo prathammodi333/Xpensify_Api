@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  created_by: one
+  invite_token: MyString
+
+two:
+  name: MyString
+  created_by: two
+  invite_token: MyString

@@ -1,0 +1,20 @@
+<%= form_with(model: Group.new, url: groups_path, remote: true) do |form| %>
+    <div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create Group</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <%= form.label :name, "Group Name" %>
+            <%= form.text_field :name, class: "form-control", required: true %>
+          </div>
+          <div class="modal-footer">
+            <%= form.submit "Create", class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  

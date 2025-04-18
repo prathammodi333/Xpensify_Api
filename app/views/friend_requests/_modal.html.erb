@@ -1,0 +1,23 @@
+<!-- app/views/friend_requests/_modal.html.erb -->
+<div class="modal fade" id="addFriendModal" tabindex="-1" aria-labelledby="addFriendModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_with url: friend_requests_path, method: :post, data: { turbo: true }, local: true do |form| %>
+        <div class="modal-header">
+          <h5 class="modal-title" id="addFriendModalLabel">Add a Friend</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= form.label :email, "Friend's Email" %>
+            <%= form.email_field :email, class: "form-control", required: true %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= form.submit "Send Invitation", class: "btn btn-primary" %>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

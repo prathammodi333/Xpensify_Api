@@ -1,0 +1,66 @@
+<!-- app/views/group_memberships/_add_member_modal.html.erb -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMemberModalLabel">Add Member to Group</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs mb-3" id="memberTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="invite-link-tab" data-bs-toggle="tab" data-bs-target="#invite-link" type="button" role="tab">Invite via Link</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="existing-friend-tab" data-bs-toggle="tab" data-bs-target="#existing-friend" type="button" role="tab">Add Existing Friend</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="invite-new-tab" data-bs-toggle="tab" data-bs-target="#invite-new" type="button" role="tab">Invite New User</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="memberTabsContent">
+          <!-- Invite via Link -->
+          <div class="tab-pane fade show active" id="invite-link" role="tabpanel">
+            <p>Share this link to invite someone to join the group:</p>
+            <input type="text" class="form-control" readonly value="<%= group_invite_url(token: @group.invite_token) %>">
+          </div>
+
+          <!-- Add Existing Friend -->
+          <div class="tab-pane fade" id="existing-friend" role="tabpanel">
+            <% if current_user.all_friends.any? %>
+              <% ungrouped_friends = current_user.all_friends.reject { |f| @group.users.include?(f) } %>
+              <% if ungrouped_friends.any? %>
+                <ul class="list-group">
+                  <% ungrouped_friends.each do |friend| %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <%= friend.name %>
+                      <%= button_to "Add", add_member_group_path(@group, user_id: friend.id), method: :post, class: "btn btn-sm btn-success" %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="text-muted">All your friends are already in this group.</p>
+              <% end %>
+            <% else %>
+              <p class="text-muted">You have no friends to add.</p>
+            <% end %>
+          </div>
+
+          <!-- Invite New User -->
+          <div class="tab-pane fade" id="invite-new" role="tabpanel">
+            <%= form_with url: add_member_email_group_path(@group), method: :post, local: true do |form| %>
+              <%= hidden_field_tag :group_id, @group.id %> <!-- Pass the group_id -->
+              <div class="mb-3">
+                <%= form.label :email, "Enter Email of New User" %>
+                <%= form.email_field :email, class: "form-control", required: true %>
+              </div>
+              <%= form.submit "Send Invite & Add", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

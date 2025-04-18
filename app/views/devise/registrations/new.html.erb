@@ -1,0 +1,40 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow p-4" id="custom-card">
+    <h2 class="text-center mb-4">Create Your Xpensify Account</h2>
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <h5><strong><%= pluralize(@user.errors.count, "error") %> prevented this account from being saved:</strong></h5>
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_with model: @user, url: user_registration_path, local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control", autofocus: true, required: true %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :email, class: "form-label" %>
+        <%= form.email_field :email, class: "form-control", required: true %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :password, class: "form-label" %>
+        <%= form.password_field :password, class: "form-control", required: true %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :password_confirmation, class: "form-label" %>
+        <%= form.password_field :password_confirmation, class: "form-control", required: true %>
+      </div>
+      <%= hidden_field_tag :inviter_id, @inviter_id %>
+      <div class="d-grid gap-2">
+        <%= form.submit "Sign Up", class: "btn btn-success" %>
+      </div>
+    <% end %>
+    <p class="text-center mt-3">
+      Already have an account? <%= link_to "Login", new_user_session_path, class: "text-decoration-none" %>
+    </p>
+  </div>
+</div>

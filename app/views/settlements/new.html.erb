@@ -1,0 +1,31 @@
+<!-- app/views/settlements/new.html.erb -->
+<div class="container mt-4">
+  <h2>Settle Up with <%= @payee.name %></h2>
+
+  <%= form_with model: [@group, @settlement], 
+              url: group_settlements_path(@group, payee_id: @payee.id), 
+              local: true do |f| %>
+  <%# Remove the hidden field - we don't need it anymore %>
+  
+  <div class="mb-3">
+    <%= f.label :amount, "Amount to pay", class: "form-label" %>
+    <div class="input-group">
+      <span class="input-group-text">$</span>
+      <%= f.number_field :amount, 
+            value: @amount_owed,
+            step: 0.01,
+            min: 0.01,
+            max: @amount_owed,
+            class: "form-control",
+            name: "settlement[amount]" %>  <%# Added name attribute %>
+    </div>
+
+      <small class="text-muted">Maximum amount owed: <%= number_to_currency(@amount_owed) %></small>
+    </div>
+
+    <div class="d-grid gap-2">
+      <%= f.submit "Confirm Payment", class: "btn btn-primary" %>
+      <%= link_to "Cancel", group_balance_path(@group), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

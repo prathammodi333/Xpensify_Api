@@ -1,0 +1,12 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-primary">Create New Group</h2>
+
+  <%= form_with model: @group, local: true do |form| %>
+    <div class="form-group mb-3">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control", required: true %>
+    </div>
+
+    <%= form.submit "Create Group", class: "btn btn-primary" %>
+  <% end %>
+</div>

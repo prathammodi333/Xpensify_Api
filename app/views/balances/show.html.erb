@@ -1,0 +1,63 @@
+<!-- app/views/balances/show.html.erb -->
+<div class="container mt-4">
+  <h2>Balances in <%= @group.name %></h2>
+  <!-- Net Balance Display -->
+  <div class="card mb-4">
+    <div class="card-header <%= @net_balance >= 0 ? 'bg-info' : 'bg-success' %> text-white">
+      <h4>Your Net Balance</h4>
+    </div>
+    <div class="card-body">
+      <p class="h5">
+        <%= if @net_balance > 0
+              "You owe a net total of #{number_to_currency(@net_balance)}"
+            elsif @net_balance < 0
+              "You are owed a net total of #{number_to_currency(@net_balance.abs)}"
+            else
+              "You're all settled up!"
+            end %>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-warning">
+          <h4>You Owe To</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+        <!-- app/views/balances/show.html.erb -->
+        <!-- app/views/balances/show.html.erb -->
+        <% @owe_to.each do |user, amount| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <%= user.name %>
+            <span class="badge bg-danger rounded-pill">
+              <%= number_to_currency(amount) %>
+            </span>
+            <%= link_to "Settle", 
+                new_with_payee_group_settlements_path(@group, payee_id: user.id), 
+                class: "btn btn-sm btn-outline-success" %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h4>Owes You</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @owed_by.each do |user, amount| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <%= user.name %>
+              <span class="badge bg-success rounded-pill">
+                <%= number_to_currency(amount) %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

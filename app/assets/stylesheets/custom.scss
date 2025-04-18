@@ -1,0 +1,103 @@
+/* app/assets/stylesheets/custom.scss */
+
+/* app/assets/stylesheets/custom.scss */
+
+body {
+    background-color: #f8f9fa;
+    margin: 0; // Remove default margin
+    padding: 0; // Remove default padding (if any)
+}
+
+h1,
+h2 {
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 1rem;
+}
+
+/* Navbar override */
+.navbar {
+
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+
+    width: 100%;
+}
+
+// .navbar .container-fluid {
+//     padding-left: 0 !important;
+//     padding-right: 0 !important;
+//     margin-left: 0 !important;
+//     margin-right: 0 !important;
+// }
+
+
+
+// .navbar {
+//     margin: 0 !important;
+//     padding-left: 0 !important;
+//     padding-right: 0 !important;
+// }
+
+.tab-pane {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+.card {
+    // margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.expense-card {
+    background-color: #f8f9fa;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.expense-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.expense-date {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.expense-description {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.expense-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paid-by {
+    font-size: 16px;
+    color: #343a40;
+}
+
+.borrow-lent {
+    font-size: 16px;
+}
+
+.borrowed {
+    color: #e74c3c;
+    /* Red for borrowed */
+}
+
+.lent {
+    color: #2ecc71;
+    /* Green for lent */
+}

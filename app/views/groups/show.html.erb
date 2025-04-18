@@ -1,0 +1,105 @@
+<div class="container mt-5">
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-primary mb-0"><%= @group.name %></h2>
+  <div class="d-flex gap-2 flex-column flex-sm-row">
+  <% if @group.created_by == current_user.id %>
+    <%= link_to "Edit Group Name", edit_group_path(@group), class: "btn btn-outline-primary" %>
+<% end %>
+    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+      ➕ Add Member
+    </button>
+    <%= link_to "💸 Settle Up", group_balance_path(@group, payer_id: current_user.id), class: "btn btn-outline-success" %>
+    <!-- Add Expense Button -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+      Add Expense
+    </button>
+  </div>
+</div>
+    <!-- Render the Add Expense Modal Partial -->
+  <%= render "expenses/add_expense_modal" %>
+
+  <!-- Tabbed Navigation -->
+  <ul class="nav nav-tabs mb-3" id="groupTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="expenses-tab" data-bs-toggle="tab" data-bs-target="#expenses" type="button" role="tab">Expenses</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="members-tab" data-bs-toggle="tab" data-bs-target="#members" type="button" role="tab">Members</button>
+    </li>
+  </ul>
+
+  <!-- Tabbed Content -->
+  <div class="tab-content" id="groupTabsContent">
+  <!-- Expenses Tab -->
+  <div class="tab-pane fade show active px-2 pt-3 pb-2" id="expenses" role="tabpanel">
+    <div class="card shadow-sm">
+      <div class="card-header bg-light border-bottom">
+        💸 <strong>Expenses</strong>
+      </div>
+      <% if @expenses.any? %>
+        <ul class="list-group list-group-flush">
+          <% @expenses.each do |expense| %>
+            <li class="list-group-item">
+              <div class="expense-card mb-4">
+                <div class="expense-header d-flex align-items-center gap-3">
+                  <% if expense.image.attached? %>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#viewReceiptModal<%= expense.id %>">
+                      <%= image_tag expense.image, class: "img-thumbnail", style: "width: 50px; height: 50px; object-fit: cover;" %>
+                    </a>
+                  <% end %>
+                  <div>
+                    <div class="expense-date">
+                      <%= expense.created_at.strftime("%b %d, %Y") %>
+                    </div>
+                    <div class="expense-description">
+                      <%= expense.description %>
+                    </div>
+                  </div>
+                </div>
+                <div class="expense-details">
+                  <div class="paid-by">
+                    <%= "#{expense.paid_by.name} paid CA$ #{expense.amount}" %>
+                  </div>
+                  <div class="borrow-lent">
+                    <% if expense.paid_by == current_user %>
+                      <% total_lent = expense.expense_shares.where(expense_id: expense.id).sum(:amount_owed) %>
+                      <span class="lent text-success">You lent <%= number_to_currency(total_lent) %></span>
+                    <% else %>
+                      <% expense_share = expense.expense_shares.find_by(expense_id: expense.id, user_id: current_user.id) %>
+                      <% if expense_share %>
+                        <span class="borrowed text-danger">You borrowed <%= number_to_currency(expense_share.amount_owed) %></span>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <%= render "expenses/view_receipt_modal", expense: expense %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="card-body">
+          <p class="text-muted mb-0">No expenses added yet.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+    <!-- Members Tab -->
+    <div class="tab-pane fade px-2 pt-3 pb-2" id="members" role="tabpanel">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header bg-light border-bottom">
+          👥 <strong>Members</strong>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @members.each do |member| %>
+            <li class="list-group-item"><%= member.name %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+<%= render "group_memberships/add_member_modal", group: @group, friends: @friends %>
+
