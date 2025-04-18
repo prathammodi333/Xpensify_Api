@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_16_163235) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_18_195004) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -121,6 +121,94 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_16_163235) do
     t.index ["group_id"], name: "index_settlements_on_group_id"
     t.index ["payee_id"], name: "index_settlements_on_payee_id"
     t.index ["payer_id"], name: "index_settlements_on_payer_id"
+  end
+
+  create_table "solid_queue_blocked_executions", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.string "queue_name", null: false
+    t.integer "priority", default: 0, null: false
+    t.datetime "scheduled_at", null: false
+    t.string "concurrency_key", null: false
+    t.index ["concurrency_key"], name: "index_solid_queue_blocked_executions_on_concurrency_key"
+  end
+
+  create_table "solid_queue_failed_executions", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.string "error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_solid_queue_failed_executions_on_job_id", unique: true
+  end
+
+  create_table "solid_queue_jobs", force: :cascade do |t|
+    t.string "queue_name", null: false
+    t.string "class_name", null: false
+    t.text "arguments"
+    t.integer "priority", default: 0, null: false
+    t.datetime "run_at", null: false
+    t.datetime "locked_at"
+    t.string "locked_by"
+    t.integer "attempts", default: 0, null: false
+    t.datetime "finished_at"
+    t.text "error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["finished_at"], name: "index_solid_queue_jobs_on_finished_at"
+    t.index ["run_at"], name: "index_solid_queue_jobs_on_run_at"
+  end
+
+  create_table "solid_queue_pauses", force: :cascade do |t|
+    t.string "queue_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["queue_name"], name: "index_solid_queue_pauses_on_queue_name", unique: true
+  end
+
+  create_table "solid_queue_processes", force: :cascade do |t|
+    t.string "kind", null: false
+    t.string "name"
+    t.datetime "last_heartbeat_at"
+    t.integer "supervisor_id"
+    t.integer "pid"
+    t.string "hostname"
+    t.text "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_heartbeat_at"], name: "index_solid_queue_processes_on_last_heartbeat_at"
+  end
+
+  create_table "solid_queue_ready_executions", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.string "queue_name", null: false
+    t.integer "priority", default: 0, null: false
+    t.datetime "scheduled_at", null: false
+    t.index ["queue_name", "priority", "scheduled_at"], name: "idx_on_queue_name_priority_scheduled_at_d908db28b2"
+  end
+
+  create_table "solid_queue_recurring_executions", force: :cascade do |t|
+    t.string "task_key", null: false
+    t.datetime "run_at", null: false
+    t.text "arguments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_key"], name: "index_solid_queue_recurring_executions_on_task_key", unique: true
+  end
+
+  create_table "solid_queue_scheduled_executions", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.string "queue_name", null: false
+    t.integer "priority", default: 0, null: false
+    t.datetime "scheduled_at", null: false
+    t.index ["queue_name", "priority", "scheduled_at"], name: "idx_on_queue_name_priority_scheduled_at_737a65c8e1"
+  end
+
+  create_table "solid_queue_semaphores", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "value", default: 1, null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
   create_table "transaction_histories", force: :cascade do |t|
