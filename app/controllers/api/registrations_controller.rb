@@ -72,7 +72,6 @@
 #   end
 # app/controllers/api/v1/registrations_controller.rb
 module Api
-  module V1
     class RegistrationsController < ApplicationController
       skip_before_action :verify_authenticity_token
       before_action :configure_devise_parameters, only: [:create]
