@@ -14,6 +14,8 @@ class ExpensesController < ApplicationController
 
       if @expense.save
         create_expense_shares
+        logger.info "Expense created with image attached: #{@expense.image.attached?}"
+        logger.info "Redirecting to: #{group_path(@group)}"
         redirect_to group_path(@group), notice: 'Expense created successfully!'
         return
       end
