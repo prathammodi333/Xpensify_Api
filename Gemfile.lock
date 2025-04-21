@@ -78,8 +78,6 @@ GEM
     argon2-kdf (0.3.0)
       fiddle
     ast (2.4.3)
-    autoprefixer-rails (10.4.19.0)
-      execjs (~> 2)
     base64 (0.2.0)
     bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.1)
@@ -92,8 +90,7 @@ GEM
       argon2-kdf (>= 0.2)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
-    bootstrap (5.3.3)
-      autoprefixer-rails (>= 9.1.0)
+    bootstrap (5.3.5)
       popper_js (>= 2.11.8, < 3)
     brakeman (7.0.2)
       racc
@@ -133,7 +130,6 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
-    execjs (2.10.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.13.0)
