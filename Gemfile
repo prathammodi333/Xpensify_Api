@@ -71,7 +71,7 @@ gem "devise", "~> 4.9"
 
 gem "lockbox", "~> 2.0"
 
-gem "blind_index", "~> 2.6"
+gem "blind_index", "~> 2.7"
 gem 'jsonapi-serializer', '~> 2.2' # For API responses
 gem 'rack-cors' # For CORS
 gem 'jwt'
